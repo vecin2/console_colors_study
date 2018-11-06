@@ -7,23 +7,28 @@ Templates are written using [jinja templates syntax](http://jinja.pocoo.org/)  a
 
 # Table Of Contents
 
-- [sqltask - a sql generator for EM projects](#sqltask---an-sql-generator-for-em-projects)
+- [sqltask - an sql generator for EM projects](#sqltask---an-sql-generator-for-em-projects)
 - [Table Of Contents](#table-of-contents)
 - [Basic Usage](#basic-usage)
-    + [Creating  a SQL Task](#creating--a-sql-task)
-    + [Exiting the application](#exiting-the-application)
+    + [Create  a SQL Task](#create--a-sql-task)
+    + [Exit the application](#exit-the-application)
     + [Show help](#show-help)
-    + [Adding New Templates](#adding-new-templates)
-      - [Hidding a Template](#hidding-a-template)
+    + [Add New Templates](#add-new-templates)
+      - [Hide a Template](#hide-a-template)
 - [User installation](#user-installation)
+    + [Upgrade](#upgrade)
+    + [Multiple versions of python](#multiple-versions-of-python)
+    + [Install builtin Templates](#install-builtin-templates)
     + [Windows Console Tools](#windows-console-tools)
 - [Template Design](#template-design)
+  * [General guidelines](#general-guidelines)
   * [Filters](#filters)
     + [Concatenate multiple filters](#concatenate-multiple-filters)
     + [List of Builtin filters](#list-of-builtin-filters)
   * [Global Functions](#global-functions)
-  * [List of Global Functions](#list-of-global-functions)
+    + [List of Builtin Global Functions](#list-of-builtin-global-functions)
   * [String Python Builtin Functions](#string-python-builtin-functions)
+  * [Include](#include)
   * [Fomatting and Naming Convention](#fomatting-and-naming-convention)
       - [Inserts](#inserts)
 - [Build Extensions](#build-extensions)
@@ -31,7 +36,6 @@ Templates are written using [jinja templates syntax](http://jinja.pocoo.org/)  a
       - [Running tests](#running-tests)
     + [Imlementing new Global functions](#imlementing-new-global-functions)
     + [Implementing new  Filters](#implementing-new--filters)
-
       
 # Basic Usage
 This section run through the steps of generating a SQL script:
