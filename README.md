@@ -210,7 +210,7 @@ Please enter 'my_variable_value`:
 There is a set of builtin global functions which can be used when writting templates.  Functions can be invoke within blocks `{% %}` or within statements `{{ }}`.
 
 ### List of Builtin Global Functions
-To the existin [list of jinja builtin global functions](http://jinja.pocoo.org/docs/2.10/templates/#builtin-globals) we have added the following:
+To the existing [list of jinja builtin global functions](http://jinja.pocoo.org/docs/2.10/templates/#builtin-globals) we have added the following:
 
 **camelcase**(_value_)
 It  returns the _value_ passed in camelcase:
