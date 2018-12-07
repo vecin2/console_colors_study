@@ -7,28 +7,23 @@ Templates are written using [jinja templates syntax](http://jinja.pocoo.org/)  a
 
 # Table Of Contents
 
-- [sqltask - an sql generator for EM projects](#sqltask---an-sql-generator-for-em-projects)
+- [sqltask - a sql generator for EM projects](#sqltask---an-sql-generator-for-em-projects)
 - [Table Of Contents](#table-of-contents)
 - [Basic Usage](#basic-usage)
-    + [Create  a SQL Task](#create--a-sql-task)
-    + [Exit the application](#exit-the-application)
+    + [Creating  a SQL Task](#creating--a-sql-task)
+    + [Exiting the application](#exiting-the-application)
     + [Show help](#show-help)
-    + [Add New Templates](#add-new-templates)
-      - [Hide a Template](#hide-a-template)
+    + [Adding New Templates](#adding-new-templates)
+      - [Hidding a Template](#hidding-a-template)
 - [User installation](#user-installation)
-    + [Upgrade](#upgrade)
-    + [Multiple versions of python](#multiple-versions-of-python)
-    + [Install builtin Templates](#install-builtin-templates)
     + [Windows Console Tools](#windows-console-tools)
 - [Template Design](#template-design)
-  * [General guidelines](#general-guidelines)
   * [Filters](#filters)
     + [Concatenate multiple filters](#concatenate-multiple-filters)
     + [List of Builtin filters](#list-of-builtin-filters)
   * [Global Functions](#global-functions)
-    + [List of Builtin Global Functions](#list-of-builtin-global-functions)
+  * [List of Global Functions](#list-of-global-functions)
   * [String Python Builtin Functions](#string-python-builtin-functions)
-  * [Include](#include)
   * [Fomatting and Naming Convention](#fomatting-and-naming-convention)
       - [Inserts](#inserts)
 - [Build Extensions](#build-extensions)
@@ -36,6 +31,7 @@ Templates are written using [jinja templates syntax](http://jinja.pocoo.org/)  a
       - [Running tests](#running-tests)
     + [Imlementing new Global functions](#imlementing-new-global-functions)
     + [Implementing new  Filters](#implementing-new--filters)
+
       
 # Basic Usage
 This section run through the steps of generating a SQL script:
@@ -98,8 +94,7 @@ It is a good practice to reuse templates to avoid duplicating SQL code. Therefor
  - When running the installation make sure to select the checkbox to add python3 to your system path
 - Check the python installation folder was added to the the system path. If is not added you can added manually:
  - In windows add the following to you path variable: %PYTHON_HOME%;%PYTHON_HOME%/Scrips;
- - 
--  Copy the template folder to some location in your filesystem. For example under the current EM project. 
+ - Copy the template folder to some location in your filesystem. For example under the current EM project. 
 - Add the following environment variables:
 	- `PYTHON_HOME` is the python installation folder. 
 	- `EM_CORE_HOME` is the current EM project, e.g. `/opt/em/projects/gsc` 
@@ -286,6 +281,35 @@ VALUES (
        );
 ```
 
+# Logging
+The application logging is configure by default to write to the logs dir within the main application folder. 
+Logging configuration can be modify by creatng a file called `logging.yaml` under the app config folder.
+This is a example of a valid configuration file:
+```yaml
+version: 1
+disable_existing_loggers: False
+formatters:
+    simple:
+        format: "%(asctime)s - %(levelname)s - %(message)s"
+handlers:
+    info_file_handler:
+        class: sql_gen.log.handlers.MakeRotatingFileHandler
+        level: INFO
+        formatter: simple
+        filename: information.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+loggers:
+    app_logger:
+        level: INFO
+        handlers: [console,info_file_handler, error_file_handler]
+        propagate: no
+root:
+    level: INFO
+    handlers: [info_file_handler]
+```
+
 # Build Extensions
 ### Developer Setup
 
@@ -305,7 +329,7 @@ Test can run with pytest: py.test from the project top folder
 
 
 ### Imlementing new Global functions
-Globals functions can easily implemented by adding the function to the `globals.py`. The function will be picked up and added to the template environment and making it available for template to use.
+Globals functions can easily implemented by adding the function to the `globals.py` module. The function is added automatically to the template enviroment and therefore available for templates to use it.
 
 ### Implementing new  Filters
  Filters are picked up by the environment by name convention. The system looks for classes under the `/filters` whith the class name matching the capitalize name of the filter +"Filter". For example:
