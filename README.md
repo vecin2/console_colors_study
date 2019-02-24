@@ -38,18 +38,53 @@ A 16 colors palette define the basic colors and the equivelent brigh colors
  1. black, 2. red, 3. green, 4. yellow 5. blue, 6. magenta, 7. cyan, 8. white
 
 For for example if we define 0 as white it will print blacks as whites. If we then defined 09 as red, it will show bold blacks as red:
+```
 printf "\33[0;30mHello World\33[m" # prints  Hello in white 
 printf "\33[1;30mHello World\33[m" # prints  Hello in red
+```
 
 
 ### Study
 We will look at different projects which help setting terminal colors and vim colors. 
+[shell_base16](https://github.com/chriskempson/base16-shell.git)(~/.config/base16-shell)
 [base16-gnome-terminal](https://github.com/aaron-williamson/base16-gnome-terminal.git)  (~/.config/base16-gnome-terminal/)
+[base16-gnome-terminal](https://github.com/seebi/dircolors-solarized): it provides the dircolors for the previous palette
+[gnome solarized](https://github.com/Anthony25/gnome-terminal-colors-solarized.git): it defines the gnome palette for the ethanschoonver solarized project.
+[gnome solarized dircolors](
+[solarized and others](https://github.com/metalelf0/gnome-terminal-colors.git): fork of solarized repository which include a few more themes (dracula, gruvbox, gotham and hemisu)
 
-shell base16
-solarized
+They define the color paletter and the foreground and background. But they do not define the type of font. Use the terminal for that.
 
-Finally after studying this project well conclude with a setting to easily change terminal and vim volors.
+## bash16-shell
+It uses printf with sequence of characters to set the palette.
+
+printf '\033Ptmux;\033\033]4;%d;rgb:%s\033\033\\\033\\' 0 $color00
+
+color00=1C/20/23
+
+So it sets the color of the palette in hexadecimal and uses the printf script to convert it and set that color of the palette.
+
+For setting foreground:
+`printf '\033Ptmux;\033\033]%d;rgb:%s\033\033\\\033\\' 10 1C/20/23`
+Background same but uses code 11:
+`printf '\033Ptmux;\033\033]%d;rgb:%s\033\033\\\033\\' 11 1C/20/23`
+
+When setting colors in this way is not compatible with using dconf tool. So need to close the terminal and come back.
+
+### base16 + base16-vim
+When runnig bas16-shell color, it sets the theme name under ~/.vimrc_background. Then this file is read by vim on entry and it uses that name to matches the them within colors.vim
+
+
+
+###solarized
+It uses gconftool
+
+set foreground, background 
+```
+gconftool-2 -s -t string $profile_path/bold_color $(cat $bd_color_file)
+gconftool-2 -s -t string $profile_path/background_color \
+```
+
 
 ### Understangin base16 project
 #### Setting profile colors
