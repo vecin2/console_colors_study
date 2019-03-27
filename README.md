@@ -35,6 +35,8 @@ Templates are written using [jinja templates syntax](http://jinja.pocoo.org/)  a
       
 # Basic Usage
 This section run through the steps of generating a SQL 
+
+
 script:
 
 - [Add a new template](#adding-new-templates) called `change_verb_context2.sql`:
